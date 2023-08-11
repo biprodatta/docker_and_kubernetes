@@ -9,6 +9,7 @@ Login to VM using putty:
 Installing Docker
 
 $ curl -fsSL https://get.docker.com | sh
+
 Installing VirtualBox
 
 $ sudo apt install virtualbox virtualbox-ext-pack
@@ -53,8 +54,11 @@ minikube   Ready    control-plane   64s   v1.25.0
 Addons Only a few addons are enabled by default during the installation but you can turn on
 
 $ minikube addons list
+
 ---To activate, run:
 $ minikube addons enable <addon-name>
+
+
 Running the First Deployment
 
 $ kubectl create deployment my-nginx --image=nginx
