@@ -13,10 +13,12 @@ $ curl -fsSL https://get.docker.com | sh
 Installing VirtualBox
 
 $ sudo apt install virtualbox virtualbox-ext-pack
+
 Installing Minikube Updating the system:
 
 $ sudo apt update -y
 $ sudo apt upgrade -y
+
 To install the latest minikube stable release on x86–64 Linux using binary download:
 
 $ sudo apt install -y curl wget apt-transport-https
@@ -24,7 +26,8 @@ $ sudo apt install -y curl wget apt-transport-https
 
 $ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
  
-$ sudo install minikube-linux-amd64 /usr/local/bin/minikube 
+$ sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
 Installing Kubectl
 
 $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -32,9 +35,11 @@ $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/sta
 $ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 $ kubectl version --client
-Start Minikube
+
+To Start Minikube
 
 $ minikube start
+
 Check Status
 
 $ minikube status
@@ -51,6 +56,7 @@ $ kubectl get nodes
 
 NAME       STATUS   ROLES           AGE   VERSION
 minikube   Ready    control-plane   64s   v1.25.0
+
 Addons Only a few addons are enabled by default during the installation but you can turn on
 
 $ minikube addons list
