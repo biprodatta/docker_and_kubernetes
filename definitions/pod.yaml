@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bipro-pod
+  labels:
+    app: bipro-app
+    type: UI
+spec:
+  containers:
+    - name: nginx
+      image: nginx
