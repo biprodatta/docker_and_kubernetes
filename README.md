@@ -1,4 +1,4 @@
-# kubernetes installation on azure VM:
+# MiniKube installation on azure VM:
 
 
 
