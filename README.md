@@ -6,41 +6,52 @@ Pré-Requisites before create your VM on Azure: It’s necessary a machine with 
 
 Login to VM using putty:
 
-Installing Docker
-
+## Commands
+```bash
+# Installing Docker
 $ curl -fsSL https://get.docker.com | sh
-
-Installing VirtualBox
+```
+```bash
+# Installing VirtualBox
 
 $ sudo apt install virtualbox virtualbox-ext-pack
+```
+```bash
 
-Installing Minikube Updating the system:
+# Installing Minikube Updating the system:
 
 $ sudo apt update -y
 $ sudo apt upgrade -y
+```
+```bash
 
-To install the latest minikube stable release on x86–64 Linux using binary download:
+# To install the latest minikube stable release on x86–64 Linux using binary download:
 
 $ sudo apt install -y curl wget apt-transport-https
-
 
 $ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
  
 $ sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+```bash
 
-Installing Kubectl
+# Installing Kubectl
 
 $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
 $ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 $ kubectl version --client
+```
+```bash
 
-To Start Minikube
+# To Start Minikube
 
 $ minikube start
+```
+```bash
 
-Check Status
+# Check Status
 
 $ minikube status
 
@@ -50,25 +61,36 @@ host: Running
 kubelet: Running
 apiserver: Running
 kubeconfig: Configured
-Get Nodes
+
+```
+```bash
+# Get Nodes
 
 $ kubectl get nodes
 
 NAME       STATUS   ROLES           AGE   VERSION
 minikube   Ready    control-plane   64s   v1.25.0
+```
+```bash
 
-Addons Only a few addons are enabled by default during the installation but you can turn on
+# Addons Only a few addons are enabled by default during the installation but you can turn on
 
 $ minikube addons list
 
----To activate, run:
+```
+```bash
+
+To activate add-ons, please run:
 $ minikube addons enable <addon-name>
+```
+```bash
 
 
-Running the First Deployment
+# Running the First Deployment
 
 $ kubectl create deployment my-nginx --image=nginx
 
 $ kubectl get deployments.apps my-nginx
 
 $ kubectl get pods
+```
