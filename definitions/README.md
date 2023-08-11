@@ -69,3 +69,7 @@ appuser@minikube-vm:~$ kubectl get pods
 NAME        READY   STATUS    RESTARTS       AGE
 test-pod   1/1     Running   1 (155m ago)   3h29m
 ```
+
+## Document Link
+
+[Kubernetes Command Link](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
