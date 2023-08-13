@@ -80,7 +80,7 @@ $ minikube addons list
 ```
 ```bash
 
-To activate add-ons, please run:
+# To activate add-ons, please run:
 $ minikube addons enable <addon-name>
 ```
 ```bash
