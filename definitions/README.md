@@ -69,6 +69,15 @@ appuser@minikube-vm:~$ kubectl get pods
 NAME        READY   STATUS    RESTARTS       AGE
 test-pod   1/1     Running   1 (155m ago)   3h29m
 ```
+```bash
+# to get details/logs of a pod 
+kubectl describe pod pod-name
+kubectl logs pod-name
+```
+```bash
+# realtime pod logs (stdout)
+kubectl logs -f my-pod
+```
 
 ## Document Link
 
