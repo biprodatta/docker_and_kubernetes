@@ -10,6 +10,7 @@ Login to VM using putty:
 ```bash
 # Installing Docker
 $ curl -fsSL https://get.docker.com | sh
+$ sudo usermod -aG docker $USER && newgrp docker
 ```
 ```bash
 # Installing VirtualBox
