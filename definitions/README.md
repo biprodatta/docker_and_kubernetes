@@ -1,16 +1,22 @@
 # Kubernetes useful commands:
 
-## Commands
+## Commands for creating alias
 ```bash
-#List all namespaces in the cluster
+alias k=kubectl
+echo 'alias k=kubectl' >>~/.bashrc
+source ~/.bashrc
+```
+
+## Commands for List all namespaces in the cluster
+```bash
 kubectl get namespaces
 ```
+## Commands for List all services in the namespace
 ```bash
-# List all services in the namespace
 kubectl get services
 ```
+## List all pods in all namespaces
 ```bash
-# List all pods in all namespaces
 kubectl get pods --all-namespaces
 ```
 ```bash
