@@ -1,40 +1,92 @@
 # Kubernetes useful commands:
 
-## Commands for creating alias
+### Commands for creating alias
 ```bash
 alias k=kubectl
 echo 'alias k=kubectl' >>~/.bashrc
 source ~/.bashrc
 ```
+###### Help for kubectl commands (it will show all commands you can run with kubectl, for ex, get,creare, delete, apply, log etc)
+```bash
+kubectl -h
+```
+###### Help for kubectl commands (it will show how to run a command with example)
+```bash
+# kubectl <command> --help
+kubectl get --help
+```
+###### List of all options can be passed to any command
+```bash
+kubectl options
+```
+###### Get the documentation of the resource and its fields
+```bash
+# kubectl explain SERVICE_NAME
+kubectl explain pods
+kubectl explain pods.spec.containers
+```
 
-## Commands for List all namespaces in the cluster
+###### List pods, services, daemonsets, deployments, replicasets, statefulsets, jobs, and CronJobs in all namespaces
+```bash
+kubectl get all --all-namespaces
+```
+
+
+###### List all namespaces in the cluster
 ```bash
 kubectl get namespaces
 ```
-## Commands for List all services in the namespace
-```bash
-kubectl get services
+
+
+
+### Commands for Pods
+###### Get list of all pods in current namespace
+```bash                                     
+kubectl get pods
 ```
-## List all pods in all namespaces
+###### Get all pods in the current namespace, with more details
+```bash                                     
+kubectl get pods -o wide
+```
+###### get all pods in all namespaces
 ```bash
 kubectl get pods --all-namespaces
 ```
+###### Get all pods in a particular namespaces
 ```bash
-# List all pods in the current namespace, with more details                                     
-kubectl get pods -o wide
+kubectl get pods -n=namespace_name
 ```
+###### Get a pod's YAML 
+```bash                             
+kubectl get pod bipro-pod -o yaml
+```
+###### create a Pod with YAML configuration
+```bash 
+kubectl apply -f pod.yaml
+```
+###### create a Pod with in command line
+```bash
+kubectl run --help 
+kubectl run nginx --image-nginnx
+```
+###### details of a pod
+```bash 
+# kubectl describe pod <POD_NAME>
+kubectl describe pod bipro-pod
+```
+
+
+###### Commands for List all services in the namespace
+```bash
+kubectl get services
+```
+
+
 ```bash
 # List a particular deployment                     
 kubectl get deployment deployment-name
 ```
-```bash
-# List all pods in the namespace                
-kubectl get pods
-```
-```bash
-# Get a pod's YAML                              
-kubectl get pod my-pod -o yaml
-```
+
 
 ```bash
 appuser@minikube-vm:~$ kubectl get namespaces
