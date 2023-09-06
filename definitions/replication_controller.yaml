@@ -3,20 +3,21 @@ kind: ReplicationController
 metadata:
   name: bipro-rc
   lebels:
-    app: bipro-app
-    type: UI
+    app: my_app
+    type: ui
 spec:
   - template:
       metadata:
         name: bipro-pod
         lebels:
-          app: bipro-app
-          type: UI
+          app: my_app
+          type: ui
       spec:
         containers:
         - name: nginx-controller
-          image: nginx
+          image: nginx:latest
 replicas: 2
 selectors:
   matchlabels:
-    type: UI
+    app: my_app
+    type: ui

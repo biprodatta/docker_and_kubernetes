@@ -3,9 +3,11 @@ kind: Pod
 metadata:
   name: bipro-pod
   labels:
-    app: bipro-app
-    type: UI
+    app: my_appapp
+    type: ui
 spec:
   containers:
     - name: nginx
-      image: nginx
+      image: nginx:latest
+      ports:
+      - containerPort: 80
