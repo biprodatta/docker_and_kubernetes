@@ -1,3 +1,9 @@
+# Kubernetes usefull links:
+#### deploy a namespace and then create a deployment and then create a nodeport service and then create a ingress for configuring a internet facing load balancer:
+https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/examples/2048/2048_full.yaml
+
+
+
 # Kubernetes useful commands:
 
 ### Commands for creating alias
