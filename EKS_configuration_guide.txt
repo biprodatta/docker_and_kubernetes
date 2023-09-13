@@ -1,0 +1,141 @@
+steps for creating EKS cluster:
+
+1) create a security group and allow all trafic for cluster subnet or for all vpc
+2) create a IAM role for EKS cluster with below details:
+
+    Open the IAM console at https://console.aws.amazon.com/iam/
+    In the left navigation pane, choose Roles.
+    On the Roles page, choose Create role.
+    On the Select trusted entity page, do the following:
+    In the Trusted entity type section, choose AWS service.
+    Under Use case, choose EKS from drop down.
+    then choose redio button "EKS - Cluster"
+    Choose Next.
+
+    you will see AmazonEKSClusterPolicy is already added.
+    Choose Next.
+    On the Name, review, and create page, do the following:
+    For Role name, enter a unique name for your role, such as AmazonEKSClusterRole.
+    For Description, replace the current text with descriptive text such as Amazon EKS - cluster role.
+    Under Add tags (Optional), add metadata to the role by attaching tags as key–value pairs.
+    Choose Create role.
+
+    after creating the role select the same role, then in "permissions" tab, click on "Add permissions" then select "attach policies" then On the Add policies page, do the following:
+    In the Filter policies box, enter AmazonEKSVPCResourceController.
+    Select the check box to the left of AmazonEKSVPCResourceController in the search results.
+    Choose Add permissions.
+
+3) create a IAM role for EKS node group with below details:
+
+    Open the IAM console at https://console.aws.amazon.com/iam/
+    In the left navigation pane, choose Roles.
+    On the Roles page, choose Create role.
+    On the Select trusted entity page, do the following:
+    In the Trusted entity type section, choose AWS service.
+    Under Use case, choose EC2.
+    Choose Next.
+    On the Add permissions page, do the following:
+    In the Filter policies box, enter AmazonEKSWorkerNodePolicy.
+    Select the check box to the left of AmazonEKSWorkerNodePolicy in the search results.
+    Choose Clear filters.
+    In the Filter policies box, enter AmazonEC2ContainerRegistryReadOnly.
+    Select the check box to the left of AmazonEC2ContainerRegistryReadOnly in the search results.
+    Either the AmazonEKS_CNI_Policy managed policy.
+    Choose Next.
+    On the Name, review, and create page, do the following:
+    For Role name, enter a unique name for your role, such as AmazonEKSNodeRole.
+    For Description, replace the current text with descriptive text such as Amazon EKS - Node role.
+    Under Add tags (Optional), add metadata to the role by attaching tags as key–value pairs.
+    Choose Create role.
+
+
+4) nevigate to "Elastic Kubernetes Service: service plane in aws colsole, then cloose "Add Cluster" --> Create
+
+    provide name of the cluster
+    choose same iam  role "AmazonEKSClusterRole" you created before.
+    if you want to enable encryption, then select your KMS key from dropdown.
+    if you want to add Tags, then add it.
+    choose Next
+    select appropriate VPC, then subnets then select the same EKS-SG you created before.
+    Choose IPv4 for "Choose cluster IP address family"
+    then enable "Configure Kubernetes service IP address range" and put CIDR range from which pool you want EKS cluster to pickup IPs.
+    for  "Cluster endpoint access":
+    choose "Public" for The cluster endpoint is accessible from outside of your VPC. Worker node traffic will leave your VPC to connect to the endpoint. 
+    choose "Public and private" for The cluster endpoint is accessible from outside of your VPC. Worker node traffic to the endpoint will stay within your VPC.
+    choose "Private" for The cluster endpoint is only accessible through your VPC. Worker node traffic to the endpoint will stay within your VPC.
+
+    for me I have choosen public for my test cluster.
+    click on Next
+
+    enable appropriate button if you want to Send audit and diagnostic logs from the Amazon EKS control plane to CloudWatch Logs.
+    I havent enabled any button for my test cluster.
+    click on Next
+
+    click on Next for Select add-ons page
+
+    keep all default value for "Configure selected add-ons settings" page. click on Next.
+    Verify details and hit "Create" button.
+
+5)  it will take few minutes to create the cluster. then once the cluster is in "Active" status, go to the "Compute" tab 
+    --> click on "add node groups"
+    in "Configure node group" page
+    --> put a nodegroup name
+    --> select "AmazonEKSNodeRole" iam role you created before for nodegroup.
+    --> if you want to use a Launch template, you may define it, for my test cluster, I havnt defined any, click "Next"
+    in "Node group compute configuration" page
+    --> keep everything same for test cluster, in "Node group scaling configuration" section, make 1 in every Desired size, Minimum size, Maximum size. click "Next". 
+    --> select appropriate subnets or keep same as pre-populated.
+    --> enable "Configure remote access to nodes" then seletct appropriate key pair for login, then select "All" for test cluster.click "Next".
+    --> Verify details and hit "Create" button.
+
+6) once cluster status is "Active" and nodegroup is also "Active" you are good to access the cluster.
+
+
+7) for accessing the cluster, Note that "YOU NEED TO USE THE SAME USER FOR ACCESSING THE CLUSTER BY WHICH USER YOU CREATED THE CLUSTER".
+    so for my test cluster, I have user abc user to login into the aws console then created everything with abc user, then did below in myy personal mac to access the cluster.
+
+
+below are pre-requisites for accessing the cluster from local machine:
+
+1) install aws cli(for MacOS):
+    curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+    sudo installer -pkg AWSCLIV2.pkg -target /
+    which aws
+    aws --version
+
+2) install kubelctl(For MacOS using brew):
+    brew install kubectl
+    kubectl version --client
+
+3)  install aws-iam-authenticator(for MacOS using brew)
+    brew install aws-iam-authenticator
+    aws-iam-authenticator help
+
+3) install eksctl(for MacOS using brew):
+    brew tap weaveworks/tap
+    brew install weaveworks/tap/eksctl
+    eksctl version
+
+8) now set aws profile for EKS usig below command using Mac Terminal:
+
+    aws configure --profile AWS_PROFILE
+    then provide access key and secret access key, region details for the SAME USER YOU USED TO CREATE THE EKS CLUSTER. put "json" for "Default output format".
+    then verify the user details using below command :
+
+    aws sts get-caller-identity
+    you will see the user or role arn and verify this is same as cluster creation role or user.
+
+    then run:
+
+    aws eks update-kubeconfig --name cluser_name --region aws_region
+    it will create .kube folder in your /Users/YourUserName and put config file inside /Users/YourUserName/.kube directory
+
+    now you can verify access to your eks cluster using :
+
+    kubectl get namespaces
+    you will see below:
+    NAME              STATUS   AGE
+    default           Active   173m
+    kube-node-lease   Active   173m
+    kube-public       Active   173m
+    kube-system       Active   173m
