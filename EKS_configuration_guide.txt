@@ -1,4 +1,4 @@
-steps for creating EKS cluster:
+steps for creating EKS cluster from AWS colsole:
 
 1) create a security group and allow all trafic for cluster subnet or for all vpc
 2) create a IAM role for EKS cluster with below details:
