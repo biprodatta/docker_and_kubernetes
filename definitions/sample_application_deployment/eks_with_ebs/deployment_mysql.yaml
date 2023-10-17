@@ -1,35 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-deployment
-  labels:
-    app: mysql
+  name: mysql
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql:latest
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: dbpassword1
+      - image: mysql:5.6
+        name: mysql
         resources:
+          requests:
+            memory: "640Mi"
+            cpu: "250m"
           limits:
-            memory: "128Mi"
+            memory: "1280Mi"
             cpu: "500m"
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
         ports:
         - containerPort: 3306
-        volumeMounts: 
-        - name: mysql-ps
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-ps
+      - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: ebs-pvc
