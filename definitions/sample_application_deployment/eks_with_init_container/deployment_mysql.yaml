@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        resources:
+          requests:
+            memory: "640Mi"
+            cpu: "250m"
+          limits:
+            memory: "1280Mi"
+            cpu: "500m"
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: "dbpassword11"
+          # valueFrom:
+          #   secretKeyRef:
+          #     name: db-secret
+          #     key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        - name: mysql-config-map
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: ebs-pvc
+      - name: mysql-config-map
+        configMap:
+          name: usermanagement-dbcreation-script

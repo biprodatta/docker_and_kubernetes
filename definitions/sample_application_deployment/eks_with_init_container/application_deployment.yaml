@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-mgmt
+spec:
+  selector:
+    matchLabels:
+      app: user-mgmt
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: user-mgmt
+    spec:
+      initContainers:
+        - name: init-db
+          image: busybox:1.31
+          command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
+      containers:
+      - image: biprodatta/usermanagement-microservice:1.0.0
+        name: app-service
+        resources:
+          requests:
+            memory: "640Mi"
+            cpu: "250m"
+          limits:
+            memory: "1280Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8095
+          name: appport
+        env:
+        - name: DB_HOSTNAME
+          value: "mysql"            
+        - name: DB_PORT
+          value: "3306"            
+        - name: DB_NAME
+          value: "usermgmt"            
+        - name: DB_USERNAME
+          value: "root"            
+        - name: DB_PASSWORD
+          value: "dbpassword11"
+          # valueFrom:
+          #   secretKeyRef:
+          #     name: db-secret
+          #     key: password
