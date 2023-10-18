@@ -18,7 +18,7 @@ spec:
           image: busybox:1.31
           command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
       containers:
-      - image: biprodatta/usermanagement-microservice:1.0.0
+      - image: biprodatta/kube-usermanagement-microservice:1.0.0
         name: app-service
         resources:
           requests:
@@ -40,8 +40,8 @@ spec:
         - name: DB_USERNAME
           value: "root"            
         - name: DB_PASSWORD
-          value: "dbpassword11"
-          # valueFrom:
-          #   secretKeyRef:
-          #     name: db-secret
-          #     key: password
+          # value: "dbpassword11"
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
