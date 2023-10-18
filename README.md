@@ -1,6 +1,8 @@
+# install docker in MAC:
+
+brew install --cask docker
+
 # MiniKube installation on azure VM:
-
-
 
 Pré-Requisites before create your VM on Azure: It’s necessary a machine with nested virtualization. The CPU family with suffix _v3 gives this support, ex: Standard D2s v3, Standard D4s v3. Standard D2s v3 is a good choice to start I am using: Linux (ubuntu 18.04)
 
