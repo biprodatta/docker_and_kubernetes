@@ -40,9 +40,11 @@ kubectl run -it --rm --image=centos:latest --restart=Never linux-bash /bin/bash
 kubectl run -it --rm --image=mikesplain/telnet --restart=Never linux-bash Ip_to_telnet port_to_telnet
 kubectl run -it --rm --image=biprodatta/centos-telnet --restart=Never linux-bash /bin/bash
 ```
-mikesplain/telnet
 
+to check if the microservice is working or not use below command to  get external IP for the node:
 
-http://3.143.168.104:32100/usermgmt/health-status
+kubectl get nods -o wide
 
-http://3.143.168.104:31231/usermgmt/health-status
+then use that IP in below to hit from browser:
+
+http://<external_ip_of_nodegroup>:32100/usermgmt/health-status
