@@ -36,8 +36,13 @@ select * from users;
 create a contos base image and login into it's bash shell command:
 
 ```bash
+kubectl run -it --rm --image=centos:latest --restart=Never linux-bash /bin/bash
 kubectl run -it --rm --image=mikesplain/telnet --restart=Never linux-bash Ip_to_telnet port_to_telnet
+kubectl run -it --rm --image=biprodatta/centos-telnet --restart=Never linux-bash /bin/bash
 ```
+mikesplain/telnet
 
 
 http://3.143.168.104:32100/usermgmt/health-status
+
+http://3.143.168.104:31231/usermgmt/health-status
